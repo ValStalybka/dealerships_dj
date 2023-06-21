@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: dealership_db
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    restart: always
+
+  backend:
+    image: dealership_web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dealership_web
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+volumes:
+  postgres_db:

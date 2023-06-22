@@ -5,7 +5,7 @@ MANAGEMENT := $(PYTHON) -m management
 
 .PHONY: run
 run:
-	pipenv run python3 src/manage.py runserver localhost:8001
+	pipenv run python3 src/manage.py runserver localhost:8000
 
 
 .PHONY: migrations

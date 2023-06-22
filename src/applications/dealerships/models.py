@@ -46,7 +46,6 @@ class Dealerships(CommonInfo):
     cars = models.ManyToManyField(
         Cars, through="DealershipCars", related_name="dealerships"
     )
-    customers = models.ManyToManyField("customers.Customers", through="DealershipSales")
 
     class Meta:
         ordering = ["name"]
@@ -62,7 +61,9 @@ class DealershipCars(CommonInfo):
     car_id = models.ForeignKey(Cars, on_delete=models.CASCADE)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency="USD")
     amount = models.PositiveIntegerField()
-    customers = models.ManyToManyField("customers.Customers", related_name="bought")
+    customers = models.ManyToManyField(
+        "customers.Customers", related_name="bought", null=True, blank=True
+    )
 
 
 class DealershipDiscounts(AbstractDiscount):

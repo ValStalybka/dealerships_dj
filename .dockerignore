@@ -1,0 +1,12 @@
+**/.cache
+**/.DS_Store
+**/.serverless/
+**/node_modules/
+*.swp
+.cache/
+.git/
+.gitignore
+.idea/
+.static/
+docker-compose.yml
+README.md

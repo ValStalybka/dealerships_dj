@@ -61,7 +61,7 @@ class DealershipCars(CommonInfo):
     car_id = models.ForeignKey(Cars, on_delete=models.CASCADE)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency="USD")
     amount = models.PositiveIntegerField()
-    customer = models.ManyToManyField(
+    customers = models.ManyToManyField(
         "customers.Customers", related_name="bought", null=True, blank=True
     )
 

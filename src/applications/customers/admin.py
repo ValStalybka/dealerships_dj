@@ -15,4 +15,4 @@ class ProfilesAdmin(admin.ModelAdmin):
     fields = ["customer_id", "bio", "birthday"]
     list_display = ["customer_id", "bio", "birthday", "created_at"]
     ordering = ("customer_id",)
-    search_fields = ("customer_id", )
+    search_fields = ("customer_id",)

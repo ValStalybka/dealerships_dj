@@ -15,12 +15,31 @@ class SupplierCarsAdmin(admin.ModelAdmin):
     fields = ["supplier", "dealership", "car", "price"]
     list_display = ["supplier", "dealership", "car", "price", "created_at"]
     ordering = ("supplier", "dealership", "created_at")
-    search_fields = ("supplier", "dealership",)
+    search_fields = (
+        "supplier",
+        "dealership",
+    )
 
 
 @admin.register(SupplierDiscounts)
 class SupplierDiscountsCarsAdmin(admin.ModelAdmin):
-    fields = ["name", "description", "supplier", "start_date", "end_date", "cars", "percent"]
-    list_display = ["name", "description", "supplier", "start_date", "end_date", "cars", "percent"]
+    fields = [
+        "name",
+        "description",
+        "supplier",
+        "start_date",
+        "end_date",
+        "cars",
+        "percent",
+    ]
+    list_display = [
+        "name",
+        "description",
+        "supplier",
+        "start_date",
+        "end_date",
+        "cars",
+        "percent",
+    ]
     ordering = ("supplier", "start_date", "percent")
     search_fields = ("supplier", "name")

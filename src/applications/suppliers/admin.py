@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Suppliers, SupplierCars, SupplierDiscounts
+from applications.suppliers.models import Suppliers, SupplierCars, SupplierDiscounts
 
 
 @admin.register(Suppliers)
@@ -12,8 +12,8 @@ class SuppliersAdmin(admin.ModelAdmin):
 
 @admin.register(SupplierCars)
 class SupplierCarsAdmin(admin.ModelAdmin):
-    fields = ["supplier", "dealership", "car", "price"]
-    list_display = ["supplier", "dealership", "car", "price", "created_at"]
+    fields = ["supplier", "dealership", "car", "price", "amount"]
+    list_display = ["supplier", "dealership", "car", "price", "amount", "created_at"]
     ordering = ("supplier", "dealership", "created_at")
     search_fields = (
         "supplier",

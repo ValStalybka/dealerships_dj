@@ -1,18 +1,27 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from djmoney.models.fields import MoneyField
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from applications.core import CommonInfo
+from applications.customers.managers import CustomerManager
 
 
-class Customers(AbstractBaseUser, CommonInfo):
-    email = models.EmailField()
+class Customers(AbstractUser, CommonInfo):
+    username = None
+    email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    balance = MoneyField(max_digits=14, decimal_places=2, default_currency="USD")
+    balance = MoneyField(
+        max_digits=14, decimal_places=2, default_currency="USD", default=0
+    )
     offer = models.JSONField(blank=True, null=True, default=None)
+    is_confirmed_email = models.BooleanField(default=False)
+
+    objects = CustomerManager()
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
 
     class Meta:
         ordering = ["last_name", "first_name"]
@@ -21,6 +30,12 @@ class Customers(AbstractBaseUser, CommonInfo):
 
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
+
+    @property
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+
+        return {"refresh": str(refresh), "access": str(refresh.access_token)}
 
 
 class Profiles(CommonInfo):

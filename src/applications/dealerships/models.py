@@ -53,25 +53,31 @@ class Dealerships(CommonInfo):
         ordering = ["name"]
         verbose_name = "Dealership"
         verbose_name_plural = "Dealerships"
+
     def __str__(self):
         return self.name
 
 
 class DealershipCars(CommonInfo):
-    dealership_id = models.ForeignKey(
+    dealership = models.ForeignKey(
         Dealerships, on_delete=models.CASCADE, related_name="sold"
     )
-    car_id = models.ForeignKey(Cars, on_delete=models.CASCADE)
+    car = models.ForeignKey(Cars, on_delete=models.CASCADE)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency="USD")
     amount = models.PositiveIntegerField()
     customer = models.ForeignKey(
-        "customers.Customers", on_delete=models.CASCADE,
-        related_name="bought", blank=True, default=None, null=True
+        "customers.Customers",
+        on_delete=models.CASCADE,
+        related_name="bought",
+        blank=True,
+        default=None,
+        null=True,
     )
 
     class Meta:
         verbose_name = "DealershipCar"
         verbose_name_plural = "DealershipCars"
+
 
 class DealershipDiscounts(AbstractDiscount):
     dealership = models.ForeignKey(

@@ -9,6 +9,9 @@ django-rest-framework = "*"
 psycopg2 = "*"
 django-countries = "*"
 django-money = "*"
+pytest-dotenv = "*"
+pytest = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 black = "*"

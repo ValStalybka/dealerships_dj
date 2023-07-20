@@ -11,7 +11,10 @@ class Suppliers(CommonInfo):
         validators=[MinValueValidator(1900), MaxValueValidator(2023)]
     )
     cars = models.ManyToManyField(
-        "dealerships.Cars", through="SupplierCars", related_name="suppliers", blank=True,
+        "dealerships.Cars",
+        through="SupplierCars",
+        related_name="suppliers",
+        blank=True,
     )
 
     class Meta:
@@ -29,9 +32,14 @@ class SupplierCars(CommonInfo):
     )
     car = models.ForeignKey("dealerships.Cars", on_delete=models.CASCADE)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency="USD")
+    amount = models.PositiveSmallIntegerField(default=0)
     dealership = models.ForeignKey(
-        "dealerships.Dealerships", on_delete=models.CASCADE, default=None,
-        blank=True, null=True, related_name="bought"
+        "dealerships.Dealerships",
+        on_delete=models.CASCADE,
+        default=None,
+        blank=True,
+        null=True,
+        related_name="bought",
     )
 
     class Meta:

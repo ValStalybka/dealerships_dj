@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customers, Profiles
+from applications.customers.models import Customers, Profiles
 
 
 @admin.register(Customers)

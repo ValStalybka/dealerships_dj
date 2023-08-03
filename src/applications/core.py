@@ -1,6 +1,17 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
-from djmoney.models.fields import MoneyField
+from functools import wraps
+
+
+def error_handler(func):
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if self._error_response:
+            return self._error_response
+        else:
+            return func(self, *args, **kwargs)
+
+    return wrapper
 
 
 class CommonInfo(models.Model):

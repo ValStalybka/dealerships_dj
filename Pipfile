@@ -9,9 +9,21 @@ django-rest-framework = "*"
 psycopg2 = "*"
 django-countries = "*"
 django-money = "*"
+pytest-dotenv = "*"
+pytest = "*"
+djangorestframework-simplejwt = "*"
+drf-yasg = "*"
+celery = "*"
+redis = "*"
+django-celery-beat = "*"
+django-celery-results = "*"
+python-decouple = "*"
+gunicorn = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 black = "*"
+flake8= "*"
 
 [requires]
 python_version = "3.10"

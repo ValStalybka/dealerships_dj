@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Cars, Dealerships, DealershipCars, DealershipDiscounts
+from applications.dealerships.models import (
+    Cars,
+    Dealerships,
+    DealershipCars,
+    DealershipDiscounts,
+)
 
 
 @admin.register(Cars)
@@ -37,15 +42,15 @@ class DealershipsAdmin(admin.ModelAdmin):
 
 @admin.register(DealershipCars)
 class DealershipCarsAdmin(admin.ModelAdmin):
-    fields = ["dealership_id", "car_id", "price", "amount", "customer"]
+    fields = ["dealership", "car", "price", "amount", "customer"]
     list_display = [
-        "dealership_id",
-        "car_id",
+        "dealership",
+        "car",
         "price",
         "amount",
     ]
-    ordering = ("dealership_id", "car_id")
-    search_fields = ("dealership_id", "car_id", "customer")
+    ordering = ("dealership", "car")
+    search_fields = ("dealership", "car", "customer")
 
 
 @admin.register(DealershipDiscounts)

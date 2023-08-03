@@ -22,7 +22,36 @@ services:
       - .env
     ports:
       - "8000:8000"
+    volumes:
+      - static:/static
     depends_on:
       - db
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static:/static
+    depends_on:
+      - backend
+
+  redis:
+    image: redis
+    restart: always
+
+  celery:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./src:/app
+    depends_on:
+      - redis
+      - backend
+    env_file:
+      - .env
+
 volumes:
   postgres_db:
+  static:

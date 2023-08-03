@@ -64,7 +64,7 @@ class DealershipCars(CommonInfo):
     )
     car = models.ForeignKey(Cars, on_delete=models.CASCADE)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency="USD")
-    amount = models.PositiveIntegerField()
+    amount = models.IntegerField()
     customer = models.ForeignKey(
         "customers.Customers",
         on_delete=models.CASCADE,

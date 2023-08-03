@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 
 from applications.dealerships.models import (
@@ -26,6 +27,13 @@ class CarSerializer(serializers.ModelSerializer):
 class DealershipGetOrderSerializer(serializers.Serializer):
     car = serializers.PrimaryKeyRelatedField(queryset=Cars.objects.all())
     amount = serializers.IntegerField()
+
+    def validate(self, attrs):
+        super().validate(attrs)
+        if attrs["amount"] <= 0:
+            raise serializers.ValidationError(
+                {"amount": "Amount must be a positive number"}
+            )
 
 
 class DealershipPostOrderSerializer(serializers.ModelSerializer):
@@ -74,3 +82,18 @@ class DealershipDiscountSerializer(serializers.Serializer):
         data1 = super().to_internal_value(data)
         data1["cars"] = {"car_list": [obj.pk for obj in data1["cars"]["car_list"]]}
         return data1
+
+    def validate(self, attrs):
+        super().validate(attrs)
+
+        if attrs["start_date"] >= attrs["end_date"]:
+            raise serializers.ValidationError(
+                {"start_date": "start date cannot come after end date"}
+            )
+
+        if attrs["end_date"] < timezone.now():
+            raise serializers.ValidationError(
+                {"end_date": "end date has already passed"}
+            )
+
+        return attrs

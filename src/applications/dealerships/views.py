@@ -73,6 +73,7 @@ class DealershipOrderView(generics.CreateAPIView):
 
 class DealershipStatisticsView(generics.RetrieveAPIView):
     queryset = DealershipCars.objects.all()
+    serializer_class = None
 
     def retrieve(self, request, *args, **kwargs):
         instance = DealershipStatisticsService(pk=kwargs.get("pk")).get_statistic()
@@ -82,17 +83,3 @@ class DealershipStatisticsView(generics.RetrieveAPIView):
 class DealershipDiscountView(generics.ListCreateAPIView):
     queryset = DealershipDiscounts.objects.all()
     serializer_class = DealershipDiscountSerializer
-
-    # def list(self, request, *args, **kwargs):
-    #     discounts = DealershipDiscounts.objects.all()
-    #
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #
-    #     page = self.paginate_queryset(queryset)
-    #     if page is not None:
-    #         serializer = self.get_serializer(page, many=True)
-    #         return self.get_paginated_response(serializer.data)
-    #
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)

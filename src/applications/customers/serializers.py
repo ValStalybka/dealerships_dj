@@ -5,6 +5,8 @@ from applications.customers.models import Customers, Profiles
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 
+from applications.dealerships.models import Cars, DealershipCars
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = PasswordField()
@@ -84,3 +86,27 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profiles
         fields = ["customer_id", "bio", "birthday"]
+
+
+class CustomerGetOfferSerializer(serializers.ModelSerializer):
+    customer = serializers.PrimaryKeyRelatedField(queryset=Customers.objects.all())
+    car = serializers.PrimaryKeyRelatedField(queryset=Cars.objects.all())
+
+    class Meta:
+        model = DealershipCars
+        fields = ["customer", "car", "price"]
+
+    def validate(self, attrs):
+        super().validate(attrs)
+        if attrs["price"] > attrs["customer"].balance.amount:
+            raise serializers.ValidationError(
+                {"price": "Not enough money for such an offer"}
+            )
+
+        return attrs
+
+
+class CustomerPostOfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DealershipCars
+        fields = ["dealership", "car", "price", "customer", "amount"]
